@@ -4,8 +4,18 @@ const result = document.querySelector(".result-box");
 
 
 
-async function twentyPokemon(){
-	const url = "https://pokeapi.co/api/v2/pokemon?limit=20";
+let currentPage = 1;
+let limit = 20;
+
+
+
+async function twentyPokemon(page=1){
+
+	currentPage=page;
+
+	const offset = (page - 1) *limit;
+
+	const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
 
 	try {
 		const response = await fetch(url)
@@ -28,6 +38,8 @@ async function twentyPokemon(){
 				</div>
 			`;
 	}).join("  ");
+
+	randerPagination(currentPage)
 
 
 	} catch (error) {
@@ -53,7 +65,7 @@ async function findPokemon(){
 	const pokemonName = inputBox.value.toLocaleLowerCase().trim();
 	
 	if (!pokemonName) {
-		result.innerHTML=`<p class="warning">Please enter a valid name.</p>`
+		result.innerHTML=`<p class="warning">Please Enter A Name First.</p>`
 		// alert("Please enter a pokemon name first.")
 		return;
 	}
@@ -119,6 +131,40 @@ async function findPokemon(){
 }
 
 
+
+
+function randerPagination(page) {
+	const pagination = document.querySelector(".pagination")
+
+	pagination.innerHTML=`
+	<div class="arrows">
+
+	<button onclick="changePage(${page -1})" ${page === 1 ? "disabled": "" } class="arrow-button"> <i class="bi bi-arrow-left-circle-fill"></i>NEXT </button>
+
+	<button onclick="twentyPokemon(${page +1})" class="arrow-button"> <i class="bi bi-arrow-right-circle-fill"></i> PREV.</button>
+
+	</div>
+	`
+}
+
+
+function changePage(newPage) {
+	if(newPage<1) return;
+	currentPage=newPage;
+	twentyPokemon(currentPage);
+}
+
+
+
+
+
+
+
+
+
+//-----------------Event listeners---------------//
+
+
 inputBox.addEventListener('input', ()=>{
 	if (inputBox.value==="") {
 		twentyPokemon();
@@ -127,15 +173,25 @@ inputBox.addEventListener('input', ()=>{
 
 
 
-window.addEventListener("DOMContentLoaded",twentyPokemon);
+window.addEventListener("DOMContentLoaded",()=>{
+	twentyPokemon(currentPage)
+});
+
+
 
 inputBox.addEventListener("keydown", (event) => {
 	if (event.key==="Enter") {
 		findPokemon()
+		inputBox.value=""
 	}
 });
 
-finder.addEventListener("click", findPokemon);
+
+
+finder.addEventListener("click", ()=>{
+	findPokemon();
+	inputBox.value="";
+});
 
 
 

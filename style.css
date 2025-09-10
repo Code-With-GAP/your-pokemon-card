@@ -20,7 +20,7 @@ body{
     height: auto;
     background: rgba(40, 199, 199, 0.5);
     margin: 100px auto;
-    margin-top: -50px;
+    margin-top: -60px;
     border-radius: 15px;
     padding: 20px;
     text-align: center;
@@ -97,11 +97,12 @@ body{
     background: rgba(0, 0, 0, 0.8);
     padding: 10px;
     border-radius: 13px;
-    box-shadow: 0 0 20px 5px rgba(0 , 255, 255, 0.6),
-                0 0 30px 7px rgba( 255, 255,  0.3);
+    box-shadow: 0 0 10px 5px rgba(0 , 255, 255, 0.6),
+                0 0 10px 5px rgba( 255, 255,  0.3);
     transition: all 1.1s ease;
     overflow: auto;
     scrollbar-width: none;
+    margin: 10px;
 }
 
 .poke-card:hover{
@@ -119,6 +120,31 @@ body{
     transform: scale(1.25);
 }
 
+
+.arrows{
+    display: flex;
+    justify-content: center;
+    flex-direction: wrap;
+    gap: 15px;
+    margin: 20px auto;
+    width: 100%;
+}
+
+
+.arrow-button{
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: 800;
+    color: brown;
+    flex: 1;
+    min-width: 80px;
+    max-width: 160px;
+    border-radius: 10px;
+    background: transparent;
+    border: 1px solid black;
+    box-shadow: inset 5px 5px 9px rgba(251, 253, 251, 0.705);
+    transition: all0.5s ease;
+}
 
 
 @media (max-width:770px) {
@@ -150,7 +176,7 @@ body{
     }
 
     .poke-card{
-        width: 45%;
+        width: 43%;
     }
 
     .result-box{
@@ -178,6 +204,16 @@ body{
     .finder{
         font-size: 14px;
         width: 100%;
+    }
+
+    .arrows{
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .arrow-button{
+        width: 100%;
+        max-width: 150px;
     }
 }
 
