@@ -83,7 +83,7 @@ async function findPokemon(){
 
 		<h2>${data.name.toUpperCase()}</h2>
 
-		<img src="${data.sprites.front_default}" alt="${data.name}" style="width:200px" >
+		<img src="${data.sprites.front_default}" alt="${data.name}">
 
 		<p><strong>Type:</strong>${data.types.map(t => t.type.name).join(", ")}</p>
 
