@@ -46,11 +46,13 @@ body{
 }
 
 .finder{
+    height: 50px;
+    width: 50px;
     color: white;
     outline: none;
     border: none;
-    border-radius: 12px;
-    padding: 3px;
+    border-radius: 50%;
+    padding:3px;
     background: #0f1ab3;
     margin-left: 6px;
 }
@@ -89,17 +91,32 @@ body{
     font-size: 19px;
     font-weight: 900;
     text-align: left;
-    height: 280px;
+    max-height: 260px;
+    height: auto;
     width: 230px;
     background: rgba(0, 0, 0, 0.8);
     padding: 10px;
     border-radius: 13px;
-    box-shadow: 4px 4px 8px white;
+    box-shadow: 0 0 20px 5px rgba(0 , 255, 255, 0.6),
+                0 0 30px 7px rgba( 255, 255,  0.3);
     transition: all 1.1s ease;
+    overflow: auto;
+    scrollbar-width: none;
 }
 
 .poke-card:hover{
     transform: scale(1.05);
+}
+
+
+.poke-card img{
+    width: 80%;
+    max-width: 180px;
+    transition: all 0.7s ease;
+}
+
+.poke-card:hover img{
+    transform: scale(1.25);
 }
 
 
@@ -111,12 +128,12 @@ body{
     }
 
     .container{
-        width: 90%;
+        width: 97%;
         margin: 50px;
     }
 
     .main{
-        flex-direction: column;
+        flex-direction: row;
         align-items: center;
     }
 
@@ -128,11 +145,12 @@ body{
 
     .finder{
         width: 50px;
-        padding: 10px;
+        padding:10px;
+        margin-bottom: 10px;
     }
 
     .poke-card{
-        width: 100%;
+        width: 45%;
     }
 
     .result-box{
@@ -142,6 +160,7 @@ body{
 
 
 @media (max-width:400px) {
+
     .heading{
         font-size: 1.2rem;
     }
@@ -153,6 +172,7 @@ body{
     .poke-card{
         font-size: 16px;
         padding: 8px;
+        margin-top: 20px;
     }
 
     .finder{

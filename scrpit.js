@@ -22,10 +22,9 @@ async function twentyPokemon(){
 			
 				<div class="poke-card">
    					<h2>${pokemon.name.toUpperCase()}</h2>
-   					<img src="${pokemon.sprites.front_default}" alt="${pokemon.name}" >
+   					<img src="${pokemon.sprites.other['official-artwork'].front_default}" alt="${pokemon.name}" >
    					<p><strong>Type:</strong>${types}</p>
-    				<p><strong>Height:</strong>${(pokemon.height*0.328084).toFixed(2)} ft</p>
-    				<p><strong>Weight:</strong>${(pokemon.weight*0.1).toFixed()} kg</p>
+    				
 				</div>
 			`;
 	}).join("  ");
@@ -43,7 +42,7 @@ async function twentyPokemon(){
 
 
 
-//----------------Function to find ----------------//
+//----------------Function for search----------------//
 
 
 
@@ -63,7 +62,7 @@ async function findPokemon(){
 		const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
 
 		if (!response.ok) {
-			result.innerHTML=`<p class="warning"> Pokemon not found, Please check the spelling.</p>`
+			result.innerHTML=`<p class="warning"> Pokemon not found, jab pokemon ke naam he nhi pta to search kyo kar rha hai love day.</p>`
 			// alert("pokemon not found")
 			return;
 		}
@@ -79,11 +78,13 @@ async function findPokemon(){
 
 
 		result.innerHTML=`
-		<div class="card mt-4 p-3">
+		<div class="poke-card">
 
-		<h2>${data.name.toUpperCase()}</h2>
+		
 
-		<img src="${data.sprites.front_default}" alt="${data.name}">
+		<img src="${data.sprites.other['official-artwork'].front_default}" alt="${data.name}">
+
+		<h2 class="name-heading">${data.name.toUpperCase()}</h2>
 
 		<p><strong>Type:</strong>${data.types.map(t => t.type.name).join(", ")}</p>
 
@@ -127,6 +128,12 @@ inputBox.addEventListener('input', ()=>{
 
 
 window.addEventListener("DOMContentLoaded",twentyPokemon);
+
+inputBox.addEventListener("keydown", (event) => {
+	if (event.key==="Enter") {
+		findPokemon()
+	}
+});
 
 finder.addEventListener("click", findPokemon);
 
