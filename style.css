@@ -97,7 +97,7 @@ body{
     background: rgba(0, 0, 0, 0.8);
     padding: 10px;
     border-radius: 13px;
-    box-shadow: 3px 5px 5px white;
+    box-shadow: 3px 5px 5px whitesmoke;
     transition: all 1.1s ease;
     overflow: auto;
     scrollbar-width: none;
