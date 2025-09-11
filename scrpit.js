@@ -51,6 +51,68 @@ async function twentyPokemon(page=1){
 }
 
 
+//-----------------FOR SUGGESTION IN INPUT BOX----------//
+
+let allpokemons = [];
+const suggestionBox = document.querySelector(".suggestions-box");
+
+async function allPokemonName() {
+	try {
+		const responses = await fetch("https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0")
+		const data  = await responses.json()
+		allpokemons = data.results.map( p => p.name)
+
+	} catch (error) {
+		console.error("ASHUVIDHA KE LIYE KHED HAI", error);
+		
+	}
+}
+
+
+
+inputBox.addEventListener("input", ()=>{
+	const query = inputBox.value.toLocaleLowerCase().trim();
+	suggestionBox.innerHTML="";
+
+	if (!query) {
+		twentyPokemon();
+		return;
+	}
+
+
+	const matches = allpokemons
+	.filter(name => name.includes(query))
+	.slice(0, 10)
+
+	if (matches.length===0) {
+		suggestionBox.innerHTML="No match found"
+		return;
+	}
+
+
+	matches.forEach(name =>{
+		const item = document.createElement("div");
+		item.classList.add("suggestion-item")
+		item.textContent=name
+		item.style.cursor="pointer"
+
+
+		item.addEventListener("click",()=>{
+			inputBox.value=name;
+			suggestionBox.innerHTML=""
+			twentyPokemon()
+		})
+
+		suggestionBox.appendChild(item)
+	})
+
+
+
+})
+
+
+
+
 
 
 
@@ -65,7 +127,7 @@ async function findPokemon(){
 	const pokemonName = inputBox.value.toLocaleLowerCase().trim();
 	
 	if (!pokemonName) {
-		result.innerHTML=`<p class="warning">Please Enter A Name First.</p>`
+		result.innerHTML=`<p class="warning">PLEASE YAAR,  BINA NAAM KE KONSA POKEMON MILEGA.</p>`
 		// alert("Please enter a pokemon name first.")
 		return;
 	}
@@ -139,9 +201,9 @@ function randerPagination(page) {
 	pagination.innerHTML=`
 	<div class="arrows">
 
-	<button onclick="changePage(${page -1})" ${page === 1 ? "disabled": "" } class="arrow-button"> <i class="bi bi-arrow-left-circle-fill"></i>NEXT </button>
+	<button onclick="changePage(${page -1})" ${page === 1 ? "disabled": "" } class="arrow-button"> <i class="bi bi-arrow-left-circle-fill"></i>PREV.</button>
 
-	<button onclick="twentyPokemon(${page +1})" class="arrow-button"> <i class="bi bi-arrow-right-circle-fill"></i> PREV.</button>
+	<button onclick="twentyPokemon(${page +1})" class="arrow-button"> <i class="bi bi-arrow-right-circle-fill"></i>NEXT</button>
 
 	</div>
 	`
@@ -175,6 +237,7 @@ inputBox.addEventListener('input', ()=>{
 
 window.addEventListener("DOMContentLoaded",()=>{
 	twentyPokemon(currentPage)
+	allPokemonName();
 });
 
 
@@ -192,6 +255,17 @@ finder.addEventListener("click", ()=>{
 	findPokemon();
 	inputBox.value="";
 });
+
+
+
+document.addEventListener("click",(event) =>{
+	if (!event.target.closest(".search-container")) {
+		suggestionBox.innerHTML=""
+	}
+})
+
+
+
 
 
 
