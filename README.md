@@ -1,1 +1,1 @@
-#your-pokemon-card
+#pokemon-card
