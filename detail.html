@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Poke Poke</title>
+  <style>
+    *{
+        color: rgb(252, 251, 249);
+        transition: all 0.5s ease;
+    }
+
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+      text-align: center;
+      background: rgba(15, 13, 13, 0.966);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    #detail-container{
+        width: 97%;
+
+    }
+
+    img {
+      max-width: 200px;
+    }
+
+    img:hover{
+        transform: scale(1.3);
+    }
+
+    .warning {
+      color: red;
+    }
+
+    .heavy{
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+    }
+
+    .back-btn {
+      margin-top: 20px;
+      background: #ffcb05;
+      color: #2a75bb;
+      padding: 10px  15px;
+      text-decoration: none;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div id="detail-container"></div>
+  <a href="index.html" class="back-btn">🔙 Back</a>
+
+  <script>
+    async function loadPokemonDetails() {
+      const params = new URLSearchParams(window.location.search);
+      const pokemonName = params.get("pokemon");
+
+      const container = document.getElementById("detail-container");
+
+      if (!pokemonName) {
+        container.innerHTML = "<p class='warning'>No Pokemon specified.</p>";
+        return;
+      }
+
+      try {
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`);
+        if (!response.ok) throw new Error();
+
+        const data = await response.json();
+
+        const height = (data.height * 0.328084).toFixed(2);
+        const weight = (data.weight * 0.1).toFixed(2);
+        const types = data.types.map(t => t.type.name).join(", ");
+        const abilities = data.abilities.map(a => a.ability.name).join(", ");
+        const stats = data.stats.map(s => `<li><strong>${s.stat.name}</strong>: ${s.base_stat}</li>`).join("");
+
+        container.innerHTML = `
+          <h1 style="text-transform:uppercase; color:yellow;">${data.name}</h1>
+          <img src="${data.sprites.other['official-artwork'].front_default}" alt="${data.name}">
+
+          <p style="color:green;"><strong>Type:</strong> ${types}</p>
+          <div class="heavy">
+            <p style="color:aqua;"><strong>Height:</strong> ${height} ft</p>
+          <p style="color:aqua;"><strong>Weight:</strong> ${weight} kg</p>
+            </div>
+          <ul style="list-style: none; text-transform:capitalize;" class="ul">${stats}</ul>
+          <p style="color:red;"><strong>Abilities:</strong> ${abilities}</p>
+        `;
+      } catch (err) {
+        container.innerHTML = "<p class='warning'>Failed to load Pokémon data.</p>";
+      }
+    }
+
+    loadPokemonDetails();
+  </script>
+</body>
+</html>

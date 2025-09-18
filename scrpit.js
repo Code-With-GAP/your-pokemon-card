@@ -31,7 +31,7 @@ async function twentyPokemon(page=1){
 			return`
 			
 				<div class="poke-card">
-   					<h2>${pokemon.name.toUpperCase()}</h2>
+   					<a href="detail.html?pokemon=${pokemon.name}" style="text-decoration:none; color:yellow;"><h2 style="font-size:30px;">${pokemon.name.toUpperCase()}</h2></a>
    					<img src="${pokemon.sprites.other['official-artwork'].front_default}" alt="${pokemon.name}" >
    					<p><strong>Type:</strong>${types}</p>
     				
@@ -147,33 +147,23 @@ async function findPokemon(){
 		const abilities = data.abilities.map(a => a.ability.name).join(", ")
 		const moves = data.moves.slice(0, 5).map(m => m.move.name).join(", ")
 		const stats = data.stats.map(s => `<li><strong>${s.stat.name.toUpperCase()}</strong>: ${s.base_stat}</li>`).join("")
+		const types = data.types.map(t => t.type.name).join(", ");
 
 
 
 
 		result.innerHTML=`
-		<div class="poke-card">
+		<div class="poke-card" style="height:;">
+
+		
+		<h2 class="name-heading" style="color:yellow;  font-size:20px;">${data.name.toUpperCase()}</h2>
+		<img src="${data.sprites.other['official-artwork'].front_default}" alt="${data.name}">
 
 		
 
-		<img src="${data.sprites.other['official-artwork'].front_default}" alt="${data.name}">
+		<p style="color:green;">${types}</p>
 
-		<h2 class="name-heading">${data.name.toUpperCase()}</h2>
-
-		<p><strong>Type:</strong>${data.types.map(t => t.type.name).join(", ")}</p>
-
-		<p><strong>Height:</strong>${(data.height * 0.328084).toFixed(2)} ft</p>
-
-		<p><strong>Weight:</strong>${(data.weight * 0.1).toFixed()} kg</p>
-
-		<p><strong>Abilities:</strong>${abilities}</p>
-
-		<p><strong>Moves:</strong>${moves}</p>
-
-		<p><strong>Base Stats:</strong></p>
-		<ul style="list-style:none; padding-left: 0;">
-			${stats}
-		</ul>
+		
 
 		</div>
 		`
@@ -262,7 +252,7 @@ document.addEventListener("click",(event) =>{
 	if (!event.target.closest(".search-container")) {
 		suggestionBox.innerHTML=""
 	}
-})
+});
 
 
 
