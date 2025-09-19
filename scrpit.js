@@ -156,7 +156,8 @@ async function findPokemon(){
 		<div class="poke-card" style="height:;">
 
 		
-		<a href="detail.html?pokemon=${pokemon.name}" style="text-decoration:none; color:yellow;"><h2 style="font-size:30px;">${pokemon.name.toUpperCase()}</h2></a>
+		<a href="detail.html?pokemon=${data.name}" style="text-decoration:none; color:yellow;"><h2 style="font-size:30px;">${data.name.toUpperCase()}</h2></a>
+
 		<img src="${data.sprites.other['official-artwork'].front_default}" alt="${data.name}">
 
 		
