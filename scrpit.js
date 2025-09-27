@@ -1,9 +1,10 @@
 const inputBox = document.querySelector(".input-box");
 const finder = document.querySelector(".finder");
 const result = document.querySelector(".result-box");
+const backBtn = document.querySelector(".home-page")
 
 
-
+backBtn.style.display="none"
 let currentPage = 1;
 let limit = 20;
 
@@ -16,6 +17,8 @@ async function twentyPokemon(page=1){
 	const offset = (page - 1) *limit;
 
 	const url = `https://pokeapi.co/api/v2/pokemon?limit=${limit}&offset=${offset}`;
+
+	backBtn.style.display="none"
 
 	try {
 		const response = await fetch(url)
@@ -136,8 +139,9 @@ async function findPokemon(){
 		const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonName}`)
 
 		if (!response.ok) {
-			result.innerHTML=`<p class="warning"> Pokemon not found, jab pokemon ke naam he nhi pta to search kyo kar rha hai love day.</p>`
+			result.innerHTML=`<p class="warning"> Pokemon not found, jab pokemon ke naam he nhi pta to search kyo kar rhe ho.</p>`
 			// alert("pokemon not found")
+			document.querySelector(".pagination").style.display="none";
 			return;
 		}
 
@@ -162,12 +166,16 @@ async function findPokemon(){
 
 		
 
-		<p style="color:green;">${types}</p>
+		<p style="color:green; text-transform:capitalize;">${types}</p>
 
 		
 
 		</div>
 		`
+
+		backBtn.style.display="block"
+
+		document.querySelector(".pagination").style.display="none";
 		// alert(`FOUND: ${data.name}\nType: ${data.types[0].type.name}`)
 
 
@@ -175,7 +183,8 @@ async function findPokemon(){
 	} catch (error) {
 		console.error("ERROR:",error);
 		result.innerHTML=`<p class="warning">Please try again later, Something went wrong</p>`
-		// alert("could not find your pokemon. please chech the spelling or someting else")
+		document.querySelector(".pagination").style.display="none";
+		// alert("could not find your pokemon. please check the spelling or something else")
 
 
 	}
@@ -192,9 +201,9 @@ function randerPagination(page) {
 	pagination.innerHTML=`
 	<div class="arrows">
 
-	<button onclick="changePage(${page -1})" ${page === 1 ? "disabled": "" } class="arrow-button"> <i class="bi bi-arrow-left-circle-fill"></i>PREV.</button>
+	<button onclick="changePage(${page -1})" ${page === 1 ? "disabled": "" } class="arrow-button">PREV.</button>
 
-	<button onclick="twentyPokemon(${page +1})" class="arrow-button"> <i class="bi bi-arrow-right-circle-fill"></i>NEXT</button>
+	<button onclick="twentyPokemon(${page +1})" class="arrow-button">NEXT</button>
 
 	</div>
 	`
